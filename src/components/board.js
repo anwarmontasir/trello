@@ -10,15 +10,16 @@ export default class Board extends React.Component {
     super(props);
 
     this.state = {
-      lists: [{
-          title: 'Example list 1'
-        },
-        {
-          title: 'Example list 2'
-        }
-      ]
+      lists: []
     };
   }
+
+  addList(title) {
+    this.setState({
+      lists: [...this.state.lists, {title}]
+    });
+  }
+
   render() {
     const lists = this.state.lists.map((list, index) => ( 
       <li className = "list-wrapper" key = {index} >
@@ -27,11 +28,11 @@ export default class Board extends React.Component {
     ));
     return ( 
       <div className = "board">
-        <h2>Example board</h2>
+        <h2>{this.props.title}</h2>
         <ul className="lists">
           {lists}
           <li className="add-list-wrapper">
-            <AddForm type="list" />
+            <AddForm type="list" onAdd={text => this.addList(text)} />
           </li>
         </ul>
       </div>
