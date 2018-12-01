@@ -9,15 +9,18 @@ export default class List extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cards: [{
-                text: 'Example card 1'
-            }, {
-                text: 'Example card 2'
-            }, {
-                text: 'Example card 3'
-            }]
+            cards: []
         }
     }
+
+    addCard(text) {
+        this.setState({
+            cards: [...this.state.cards, {
+                text
+            }]
+        });
+    }
+
     render() {
         const cards = this.state.cards.map((card, index) => 
             <li key={index}>
@@ -30,10 +33,14 @@ export default class List extends React.Component {
                 <ul className="list">
                     {cards}
                     <li>
-                        <AddForm type="card" />
+                        <AddForm type="card" onAdd={text => this.addCard(text)} />
                     </li>
                 </ul>
             </div>
         );
     }
 }
+
+List.defaultProps = {
+    title: ''
+};
